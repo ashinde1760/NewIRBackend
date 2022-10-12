@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import com.example.InvestorRelationBackend.masterData.BalanceSheetForm;
+import com.example.InvestorRelationBackend.masterData.CashFlow;
+import com.example.InvestorRelationBackend.masterData.IncomeStatement;
 import com.example.InvestorRelationBackend.modelir.RoleModel;
 import com.example.InvestorRelationBackend.modelir.User;
 
@@ -42,5 +45,24 @@ public interface RoleServiceInterface {
 	void deleteUser(String id) throws SQLException;
 	
 	List<RoleModel> getRoleByStatus() throws SQLException;
+
+	
+//	code by shubham
+
+	List<BalanceSheetForm> getBalanceSheetData() throws SQLException;
+
+	String createBalanceSheetForm(BalanceSheetForm balanceSheetForm) throws SQLException;
+
+	String createIncomeForm(IncomeStatement incomeStatement) throws SQLException;
+
+	List<BalanceSheetForm> getIncomeData() throws SQLException;
+
+	String createCashFlow(CashFlow cashFlow) throws SQLException;
+
+	List<CashFlow> getCashFlowData() throws SQLException;
+
+	
+
+	
 
 }

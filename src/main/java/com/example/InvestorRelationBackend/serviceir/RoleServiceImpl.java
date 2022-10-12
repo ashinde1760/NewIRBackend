@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.example.InvestorRelationBackend.masterData.BalanceSheetForm;
+import com.example.InvestorRelationBackend.masterData.CashFlow;
+import com.example.InvestorRelationBackend.masterData.IncomeStatement;
 import com.example.InvestorRelationBackend.modelir.RoleModel;
 import com.example.InvestorRelationBackend.modelir.User;
 
@@ -24,7 +27,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 	private final static String url = "jdbc:postgresql://localhost/postgres";
 	private final static String user = "postgres";
-	private final static String password = "pass";
+	private final static String password = "Shiv";
 
 	@Override
 	public String createRole1(RoleModel role) throws SQLException {
@@ -478,5 +481,176 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		}
 
 	}
+
+	@Override
+	public String createBalanceSheetForm(BalanceSheetForm balanceSheetForm) throws SQLException {
+
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+
+			PreparedStatement preparedStatement = null;
+			String query = "insert into balanceSheet values(?,?,?,?)";
+
+			preparedStatement = conn.prepareStatement(query);
+			String id = UUID.randomUUID().toString();
+			balanceSheetForm.setId(id);
+			preparedStatement.setString(1, balanceSheetForm.getId());
+			preparedStatement.setString(2, balanceSheetForm.getLineItem());
+			preparedStatement.setString(3, balanceSheetForm.getAlternativeName());
+			preparedStatement.setString(4, balanceSheetForm.getType());
+
+			int executeUpdate = preparedStatement.executeUpdate();
+			System.out.println(executeUpdate + " after sheet creation");
+
+			return balanceSheetForm.getId().toString();
+
+		}
+
+	}
+
+	@Override
+	public List<BalanceSheetForm> getBalanceSheetData() throws SQLException {
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+			Statement stmt = conn.createStatement();
+
+			String query = "Select * from balanceSheet";
+			ResultSet rs = stmt.executeQuery(query);
+
+			ArrayList<BalanceSheetForm> sheet = new ArrayList<>();
+			int count = 0;
+
+			while (rs.next()) {
+				BalanceSheetForm balanceSheetForm = new BalanceSheetForm();
+				balanceSheetForm.setId(rs.getString(1));
+				balanceSheetForm.setLineItem(rs.getString(2));
+				balanceSheetForm.setAlternativeName(rs.getString(3));
+				balanceSheetForm.setType(rs.getString(4));
+
+				sheet.add(balanceSheetForm);
+
+				
+			}
+			System.out.println("List of balance Sheet form");
+			System.out.println(sheet.size());
+			return sheet;
+
+		}
+
+	}
+
+	@Override
+	public String createIncomeForm(IncomeStatement incomeStatement) throws SQLException {
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+
+			PreparedStatement preparedStatement = null;
+			String query = "insert into incomeStatement values(?,?,?,?)";
+
+			preparedStatement = conn.prepareStatement(query);
+			String id = UUID.randomUUID().toString();
+			incomeStatement.setId(id);
+			preparedStatement.setString(1, incomeStatement.getId());
+			preparedStatement.setString(2, incomeStatement.getLineItem());
+			preparedStatement.setString(3, incomeStatement.getAlternativeName());
+			preparedStatement.setString(4, incomeStatement.getType());
+
+			int executeUpdate = preparedStatement.executeUpdate();
+			System.out.println(executeUpdate + " after Income Statement creation");
+
+			return incomeStatement.getId().toString();
+
+		}
+
+	}
+
+	@Override
+	public List<BalanceSheetForm> getIncomeData() throws SQLException {
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+			Statement stmt = conn.createStatement();
+
+			String query = "Select * from incomeStatement";
+			ResultSet rs = stmt.executeQuery(query);
+
+			ArrayList<BalanceSheetForm> income = new ArrayList<>();
+			int count = 0;
+
+			while (rs.next()) {
+				BalanceSheetForm balanceSheetForm = new BalanceSheetForm();
+				balanceSheetForm.setId(rs.getString(1));
+				balanceSheetForm.setLineItem(rs.getString(2));
+				balanceSheetForm.setAlternativeName(rs.getString(3));
+				balanceSheetForm.setType(rs.getString(4));
+
+				income.add(balanceSheetForm);
+
+				
+			}
+			System.out.println("List of balance Sheet form");
+			System.out.println(income.size());
+			return income;
+
+		}
+		
+	}
+
+	@Override
+	public String createCashFlow(CashFlow cashFlow) throws SQLException {
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+
+			PreparedStatement preparedStatement = null;
+			String query = "insert into cashFlow values(?,?,?,?)";
+
+			preparedStatement = conn.prepareStatement(query);
+			String id = UUID.randomUUID().toString();
+			cashFlow.setId(id);
+			preparedStatement.setString(1, cashFlow.getId());
+			preparedStatement.setString(2, cashFlow.getLineItem());
+			preparedStatement.setString(3, cashFlow.getAlternativeName());
+			preparedStatement.setString(4, cashFlow.getType());
+
+			int executeUpdate = preparedStatement.executeUpdate();
+			System.out.println(executeUpdate + " after Income Statement creation");
+
+			return cashFlow.getId().toString();
+
+		}
+	}
+
+	@Override
+	public List<CashFlow> getCashFlowData() throws SQLException {
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+			Statement stmt = conn.createStatement();
+
+			String query = "Select * from cashFlow";
+			ResultSet rs = stmt.executeQuery(query);
+
+			ArrayList<CashFlow> cashflow = new ArrayList<>();
+			int count = 0;
+
+			while (rs.next()) {
+				CashFlow cashFlowNew = new CashFlow();
+				cashFlowNew.setId(rs.getString(1));
+				cashFlowNew.setLineItem(rs.getString(2));
+				cashFlowNew.setAlternativeName(rs.getString(3));
+				cashFlowNew.setType(rs.getString(4));
+
+				cashflow.add(cashFlowNew);
+
+			}
+			
+			System.out.println("List of balance Sheet form");
+			System.out.println(cashflow.size());
+			
+			 return cashflow;
+
+		}
+		
+	}
+
+	
+
+	
+
+	
+
+	
 
 }

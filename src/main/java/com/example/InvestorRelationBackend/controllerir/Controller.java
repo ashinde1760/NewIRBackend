@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.InvestorRelationBackend.masterData.BalanceSheetForm;
+import com.example.InvestorRelationBackend.masterData.CashFlow;
+import com.example.InvestorRelationBackend.masterData.IncomeStatement;
 import com.example.InvestorRelationBackend.modelir.RoleModel;
 import com.example.InvestorRelationBackend.modelir.User;
 import com.example.InvestorRelationBackend.serviceir.RoleServiceInterface;
@@ -108,6 +111,46 @@ public class Controller {
 		System.out.println(id+"  id which will get deleted");
 		roleInterface.deleteUser(id);
 	}
+	
+	
+	
+//	new api by shubham
+	
+	@PostMapping("/balanceSheet")
+	public String createBalanceSheet(@RequestBody BalanceSheetForm balanceSheetForm) throws SQLException {
+		System.out.println("creating Sheet");
+		return this.roleInterface.createBalanceSheetForm(balanceSheetForm);
+	}
+	
+	@GetMapping("/balanceSheet")
+	public List<BalanceSheetForm> getBalanceSheetData() throws SQLException {
+		return this.roleInterface.getBalanceSheetData();
+	}
+	
+	
+	@PostMapping("/incomeStatement")
+	public String createIncomeStatement(@RequestBody IncomeStatement incomeStatement) throws SQLException {
+		System.out.println("creating Sheet");
+		return this.roleInterface.createIncomeForm(incomeStatement);
+	}
+	
+	@GetMapping("/incomeStatement")
+	public List<BalanceSheetForm> getIncomeData() throws SQLException {
+		return this.roleInterface.getIncomeData();
+	}
+	
+	
+	@PostMapping("/cashFlow")
+	public String createCashFlow(@RequestBody CashFlow cashFlow  ) throws SQLException {
+		System.out.println("creating Sheet");
+		return this.roleInterface.createCashFlow(cashFlow);
+	}
+	
+	@GetMapping("/cashFlow")
+	public List<CashFlow> getCashFlow() throws SQLException {
+		return this.roleInterface.getCashFlowData();
+	}
+	
 	
 	
 }
