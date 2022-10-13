@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.InvestorRelationBackend.masterData.BalanceSheetForm;
 import com.example.InvestorRelationBackend.masterData.CashFlow;
 import com.example.InvestorRelationBackend.masterData.IncomeStatement;
+import com.example.InvestorRelationBackend.masterData.ShareHolderContactDetailsForm;
+import com.example.InvestorRelationBackend.masterData.ShareHolderDataForm;
+import com.example.InvestorRelationBackend.masterData.ShareholderMeetingDetailsForm;
 import com.example.InvestorRelationBackend.modelir.RoleModel;
 import com.example.InvestorRelationBackend.modelir.User;
 import com.example.InvestorRelationBackend.serviceir.RoleServiceInterface;
@@ -150,6 +153,38 @@ public class Controller {
 	public List<CashFlow> getCashFlow() throws SQLException {
 		return this.roleInterface.getCashFlowData();
 	}
+	
+	@PostMapping("/shareHolder")
+	public String createShareHolderData(@RequestBody ShareHolderDataForm  dataForm) throws SQLException {
+		return this.roleInterface.createShareHolderData(dataForm);
+	}
+	
+	@GetMapping("/shareHolder")
+	public List<ShareHolderDataForm> getShareHolderData() throws SQLException{
+		return this.roleInterface.getShareHolderData();
+	}
+	
+	@PostMapping("/contact")
+	public String createShareHolderContact(@RequestBody ShareHolderContactDetailsForm detailsForm) throws SQLException {
+		return this.roleInterface.createContact(detailsForm);
+	}
+	
+	@GetMapping("/contact")
+	public List<ShareHolderContactDetailsForm> getContactDetails() throws SQLException {
+		return this.roleInterface.getContactDetails();
+	}
+	
+	@PostMapping("/meeting")
+	public String createMeetingData(@RequestBody ShareholderMeetingDetailsForm form) throws SQLException {
+		return this.roleInterface.createMeetingDetails(form);
+	}
+	
+	@GetMapping("/meeting")
+	public List<ShareholderMeetingDetailsForm> getAllMeetingDetails() throws SQLException{
+		return this.roleInterface.getAllMeetingData();
+	}
+	
+	
 	
 	
 	
