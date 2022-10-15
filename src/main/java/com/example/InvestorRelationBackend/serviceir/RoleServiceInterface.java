@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import com.example.InvestorRelationBackend.masterData.BalanceSheetForm;
 import com.example.InvestorRelationBackend.masterData.CashFlow;
 import com.example.InvestorRelationBackend.masterData.IncomeStatement;
+import com.example.InvestorRelationBackend.masterData.ShareHolderContactDetailsForm;
+import com.example.InvestorRelationBackend.masterData.ShareHolderDataForm;
+import com.example.InvestorRelationBackend.masterData.ShareholderMeetingDetailsForm;
 import com.example.InvestorRelationBackend.modelir.RoleModel;
 import com.example.InvestorRelationBackend.modelir.User;
 
@@ -60,6 +63,18 @@ public interface RoleServiceInterface {
 	String createCashFlow(CashFlow cashFlow) throws SQLException;
 
 	List<CashFlow> getCashFlowData() throws SQLException;
+
+	String createShareHolderData(ShareHolderDataForm dataForm) throws SQLException;
+
+	List<ShareHolderDataForm> getShareHolderData() throws SQLException;
+
+	String createContact(ShareHolderContactDetailsForm detailsForm) throws SQLException;
+
+	List<ShareHolderContactDetailsForm> getContactDetails() throws SQLException;
+
+	String createMeetingDetails(ShareholderMeetingDetailsForm form) throws SQLException;
+
+	List<ShareholderMeetingDetailsForm> getAllMeetingData() throws SQLException;
 
 	
 

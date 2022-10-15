@@ -19,6 +19,9 @@ import org.springframework.stereotype.Service;
 import com.example.InvestorRelationBackend.masterData.BalanceSheetForm;
 import com.example.InvestorRelationBackend.masterData.CashFlow;
 import com.example.InvestorRelationBackend.masterData.IncomeStatement;
+import com.example.InvestorRelationBackend.masterData.ShareHolderContactDetailsForm;
+import com.example.InvestorRelationBackend.masterData.ShareHolderDataForm;
+import com.example.InvestorRelationBackend.masterData.ShareholderMeetingDetailsForm;
 import com.example.InvestorRelationBackend.modelir.RoleModel;
 import com.example.InvestorRelationBackend.modelir.User;
 
@@ -515,7 +518,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			String query = "Select * from balanceSheet";
 			ResultSet rs = stmt.executeQuery(query);
 
-			ArrayList<BalanceSheetForm> sheet = new ArrayList<>();
+			List<BalanceSheetForm> sheet = new ArrayList<>();
 			int count = 0;
 
 			while (rs.next()) {
@@ -527,7 +530,6 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 				sheet.add(balanceSheetForm);
 
-				
 			}
 			System.out.println("List of balance Sheet form");
 			System.out.println(sheet.size());
@@ -569,7 +571,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			String query = "Select * from incomeStatement";
 			ResultSet rs = stmt.executeQuery(query);
 
-			ArrayList<BalanceSheetForm> income = new ArrayList<>();
+			List<BalanceSheetForm> income = new ArrayList<>();
 			int count = 0;
 
 			while (rs.next()) {
@@ -581,14 +583,13 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 				income.add(balanceSheetForm);
 
-				
 			}
 			System.out.println("List of balance Sheet form");
 			System.out.println(income.size());
 			return income;
 
 		}
-		
+
 	}
 
 	@Override
@@ -622,7 +623,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			String query = "Select * from cashFlow";
 			ResultSet rs = stmt.executeQuery(query);
 
-			ArrayList<CashFlow> cashflow = new ArrayList<>();
+			List<CashFlow> cashflow = new ArrayList<>();
 			int count = 0;
 
 			while (rs.next()) {
@@ -635,22 +636,212 @@ public class RoleServiceImpl implements RoleServiceInterface {
 				cashflow.add(cashFlowNew);
 
 			}
-			
+
 			System.out.println("List of balance Sheet form");
 			System.out.println(cashflow.size());
-			
-			 return cashflow;
+
+			return cashflow;
 
 		}
-		
+
 	}
 
+	@Override
+	public String createShareHolderData(ShareHolderDataForm dataForm) throws SQLException {
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+
+			PreparedStatement preparedStatement = null;
+			String query = "insert into shareholder values(?,?,?,?,?,?,?,?,?)";
+
+			Date date = new Date();
+
+			preparedStatement = conn.prepareStatement(query);
+			String id = UUID.randomUUID().toString();
+			dataForm.setClientId(id);
+			preparedStatement.setString(1, id);
+			preparedStatement.setString(2, dataForm.getClientId());
+			preparedStatement.setString(3, dataForm.getPortfoliold());
+			preparedStatement.setString(4, dataForm.getFolio());
+			preparedStatement.setString(5, dataForm.getShareHolderName());
+			preparedStatement.setString(6, dataForm.getHoldingValue());
+			preparedStatement.setString(7, dataForm.getHoldingPercentage());
+			preparedStatement.setString(8, dataForm.getMinorCode());
+			preparedStatement.setLong(9, date.getTime());
+
+			int executeUpdate = preparedStatement.executeUpdate();
+			System.out.println(executeUpdate + " after Income Statement creation");
+
+			return dataForm.getClientId().toString();
+
+		}
+	}
+
+	@Override
+	public List<ShareHolderDataForm> getShareHolderData() throws SQLException {
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+
+			Statement statement = conn.createStatement();
+
+			String query = "select * from shareholder";
+
+			ResultSet rs = statement.executeQuery(query);
+
+			List<ShareHolderDataForm> holder = new ArrayList<>();
+			while (rs.next()) {
+				ShareHolderDataForm form = new ShareHolderDataForm();
+				form.setId(rs.getString(1));
+				form.setClientId(rs.getString(2));
+				form.setPortfoliold(rs.getString(3));
+				form.setFolio(rs.getString(4));
+				form.setClientId(rs.getString(5));
+				form.setHoldingValue(rs.getString(6));
+				form.setHoldingPercentage(rs.getString(7));
+				form.setMinorCode(rs.getString(8));
+				form.setDate(rs.getLong(9));
+
+				holder.add(form);
+
+			}
+			System.out.println("ShareHolderList" + holder);
+			System.out.println(holder.size());
+			return holder;
+
+		}
+
+	}
+
+	@Override
+	public String createContact(ShareHolderContactDetailsForm detailsForm) throws SQLException {
+
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+
+			PreparedStatement preparedStatement = null;
+			String query = "insert into contact values(?,?,?,?,?,?,?)";
+
+			preparedStatement = conn.prepareStatement(query);
+			String clientId = UUID.randomUUID().toString();
+			detailsForm.setId(clientId);
+			preparedStatement.setString(1, clientId);
+			preparedStatement.setString(2, detailsForm.getName());
+			preparedStatement.setString(3, detailsForm.getPoc());
+			preparedStatement.setString(4, detailsForm.getEmail());
+			preparedStatement.setString(5, detailsForm.getMinorCode());
+			preparedStatement.setString(6, detailsForm.getAddress());
+			preparedStatement.setString(7, detailsForm.getContact());
+
+			int executeUpdate = preparedStatement.executeUpdate();
+			System.out.println(executeUpdate + " after Income Statement creation");
+
+			return detailsForm.getId().toString();
+
+		}
+	}
+
+	@Override
+	public List<ShareHolderContactDetailsForm> getContactDetails() throws SQLException {
+
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+
+			Statement statement = conn.createStatement();
+
+			String query = "select * from contact";
+
+			ResultSet rs = statement.executeQuery(query);
+
+			List<ShareHolderContactDetailsForm> contact = new ArrayList<>();
+			while (rs.next()) {
+				ShareHolderContactDetailsForm form = new ShareHolderContactDetailsForm();
+				form.setId(rs.getString(1));
+				form.setName(rs.getString(2));
+				form.setPoc(rs.getString(3));
+				form.setEmail(rs.getString(4));
+				form.setMinorCode(rs.getString(5));
+				form.setAddress(rs.getString(6));
+				form.setContact(rs.getString(7));
+
+				contact.add(form);
+
+			}
+			System.out.println("ShareHolderList" + contact);
+			System.out.println(contact.size());
+			return contact;
+		}
+	}
+
+	@Override
+	public String createMeetingDetails(ShareholderMeetingDetailsForm form) throws SQLException {
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+
+			PreparedStatement preparedStatement = null;
+			String query = "insert into meeting values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+			Date date = new Date();
+
+			preparedStatement = conn.prepareStatement(query);
+			String id = UUID.randomUUID().toString();
+			form.setId(id);
+			preparedStatement.setString(1, id);
+			preparedStatement.setLong(2,date.getTime());
+			preparedStatement.setLong(3,date.getTime());
+			preparedStatement.setLong(4,date.getTime());
+			preparedStatement.setString(5, form.getOrganization());
+			preparedStatement.setString(6, form.getStakeHolderType());
+			preparedStatement.setString(7, form.getMeetingType());
+			preparedStatement.setString(8, form.getSubject());
+			preparedStatement.setString(9, form.getLocation());
+			preparedStatement.setString(10, form.getStatus());
+			preparedStatement.setString(11, form.getComments());			
+			preparedStatement.setString(12, form.getParticipent());
+			preparedStatement.setString(13, form.getFeedback());
+
+			int executeUpdate = preparedStatement.executeUpdate();
+			System.out.println(executeUpdate + " after Income Statement creation");
+
+			return form.getId().toString();
+
+		}
+	}
 	
 
 	
 
-	
+	@Override
+	public List<ShareholderMeetingDetailsForm> getAllMeetingData() throws SQLException {
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
 
-	
+			Statement statement = conn.createStatement();
 
-}
+			String query = "select * from meeting";
+
+			ResultSet rs = statement.executeQuery(query);
+
+			List<ShareholderMeetingDetailsForm> meeting = new ArrayList<>();
+			while (rs.next()) {
+				ShareholderMeetingDetailsForm form = new ShareholderMeetingDetailsForm();
+				form.setId(rs.getString(1));
+				form.setDate(rs.getLong(2));
+				form.setStartTime(rs.getLong(3));
+				form.setEndTime(rs.getLong(4));
+				form.setOrganization(rs.getString(5));
+				form.setStakeHolderType(rs.getString(6));
+				form.setMeetingType(rs.getString(7));
+				form.setSubject(rs.getString(8));
+				form.setLocation(rs.getString(9));
+				form.setStatus(rs.getString(10));
+				form.setComments(rs.getString(11));
+				form.setParticipent(rs.getString(12));
+				form.setFeedback(rs.getString(13));
+
+				meeting.add(form);
+
+			}
+			System.out.println("ShareHolderList" + meeting);
+			System.out.println(meeting.size());
+			return meeting;
+
+		}
+
+	}
+	}
+
+
