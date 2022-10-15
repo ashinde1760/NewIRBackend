@@ -27,7 +27,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 	private final static String url = "jdbc:postgresql://localhost/postgres";
 	private final static String user = "postgres";
-	private final static String password = "Shiv";
+	private final static String password = "pass";
 
 	@Override
 	public String createRole1(RoleModel role) throws SQLException {
@@ -41,14 +41,14 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			String id = UUID.randomUUID().toString();
 			role.setId(id);
 
-			Array array = conn.createArrayOf("VARCHAR", role.getDashboardAccess().toArray());
+//			Array array = conn.createArrayOf("VARCHAR", role.getDashboardAccess().toArray());
 
 			Date date = new Date();
 			preparedStatement.setString(1, role.getId());
 			preparedStatement.setString(2, role.getRoleName());
 			preparedStatement.setString(3, role.getDescription());
 			preparedStatement.setString(4, role.getStatus());
-			preparedStatement.setArray(5, array);
+			preparedStatement.setString(5, role.getDashboardAccess().toString());
 			preparedStatement.setLong(6, date.getTime());
 
 			int executeUpdate = preparedStatement.executeUpdate();

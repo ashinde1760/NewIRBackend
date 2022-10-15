@@ -124,6 +124,8 @@ public class Controller {
 	
 	@GetMapping("/balanceSheet")
 	public List<BalanceSheetForm> getBalanceSheetData() throws SQLException {
+		System.out.println("getting Sheet");
+
 		return this.roleInterface.getBalanceSheetData();
 	}
 	
