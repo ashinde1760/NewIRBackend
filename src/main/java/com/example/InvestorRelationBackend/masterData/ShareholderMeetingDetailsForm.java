@@ -3,29 +3,64 @@ package com.example.InvestorRelationBackend.masterData;
 public class ShareholderMeetingDetailsForm {
 
 	private String id;
-	private long date;
-	
-	private long startTime;
-	
-	private long endTime;
-	
-	private String organization;
-	
-	private String stakeHolderType;
-	
+	private String date;
+
+	private String startTime;
+
+	private String endTime;
+
+	private String organisation;
+
+	private String stakeholderType;
+
 	private String meetingType;
-	
+
 	private String subject;
-	
+
+	private String broker;
+
 	private String location;
-	
+
 	private String status;
-	
+
 	private String comments;
-	
-	private String participent;
-	
+
+	private String participants;
+
 	private String feedback;
+
+	public ShareholderMeetingDetailsForm() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ShareholderMeetingDetailsForm(String id, String date, String startTime, String endTime, String organisation,
+			String stakeholderType, String meetingType, String subject, String broker, String location, String status,
+			String comments, String participants, String feedback) {
+		super();
+		this.id = id;
+		this.date = date;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.organisation = organisation;
+		this.stakeholderType = stakeholderType;
+		this.meetingType = meetingType;
+		this.subject = subject;
+		this.broker = broker;
+		this.location = location;
+		this.status = status;
+		this.comments = comments;
+		this.participants = participants;
+		this.feedback = feedback;
+	}
+
+	@Override
+	public String toString() {
+		return "ShareholderMeetingDetailsForm [id=" + id + ", date=" + date + ", startTime=" + startTime + ", endTime="
+				+ endTime + ", organisation=" + organisation + ", stakeholderType=" + stakeholderType + ", meetingType="
+				+ meetingType + ", subject=" + subject + ", broker=" + broker + ", location=" + location + ", status="
+				+ status + ", comments=" + comments + ", participants=" + participants + ", feedback=" + feedback + "]";
+	}
 
 	public String getId() {
 		return id;
@@ -35,44 +70,44 @@ public class ShareholderMeetingDetailsForm {
 		this.id = id;
 	}
 
-	public long getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(long date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
-	public long getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(long startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public long getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(long endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 
-	public String getOrganization() {
-		return organization;
+	public String getOrganisation() {
+		return organisation;
 	}
 
-	public void setOrganization(String organization) {
-		this.organization = organization;
+	public void setOrganisation(String organisation) {
+		this.organisation = organisation;
 	}
 
-	public String getStakeHolderType() {
-		return stakeHolderType;
+	public String getStakeholderType() {
+		return stakeholderType;
 	}
 
-	public void setStakeHolderType(String stakeHolderType) {
-		this.stakeHolderType = stakeHolderType;
+	public void setStakeholderType(String stakeholderType) {
+		this.stakeholderType = stakeholderType;
 	}
 
 	public String getMeetingType() {
@@ -89,6 +124,14 @@ public class ShareholderMeetingDetailsForm {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public String getBroker() {
+		return broker;
+	}
+
+	public void setBroker(String broker) {
+		this.broker = broker;
 	}
 
 	public String getLocation() {
@@ -115,12 +158,12 @@ public class ShareholderMeetingDetailsForm {
 		this.comments = comments;
 	}
 
-	public String getParticipent() {
-		return participent;
+	public String getParticipants() {
+		return participants;
 	}
 
-	public void setParticipent(String participent) {
-		this.participent = participent;
+	public void setParticipants(String participants) {
+		this.participants = participants;
 	}
 
 	public String getFeedback() {
@@ -131,36 +174,6 @@ public class ShareholderMeetingDetailsForm {
 		this.feedback = feedback;
 	}
 
-	public ShareholderMeetingDetailsForm(String id, long date, long startTime, long endTime, String organization,
-			String stakeHolderType, String meetingType, String subject, String location, String status, String comments,
-			String participent, String feedback) {
-		super();
-		this.id = id;
-		this.date = date;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.organization = organization;
-		this.stakeHolderType = stakeHolderType;
-		this.meetingType = meetingType;
-		this.subject = subject;
-		this.location = location;
-		this.status = status;
-		this.comments = comments;
-		this.participent = participent;
-		this.feedback = feedback;
-	}
-
-	public ShareholderMeetingDetailsForm() {
-		super();
-	}
-
-	@Override
-	public String toString() {
-		return "ShareholderMeetingDetailsForm [id=" + id + ", date=" + date + ", startTime=" + startTime + ", endTime="
-				+ endTime + ", organization=" + organization + ", stakeHolderType=" + stakeHolderType + ", meetingType="
-				+ meetingType + ", subject=" + subject + ", location=" + location + ", status=" + status + ", comments="
-				+ comments + ", participent=" + participent + ", feedback=" + feedback + "]";
-	}
 	
 
 }
