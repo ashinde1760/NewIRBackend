@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.InvestorRelationBackend.masterData.BalanceSheetForm;
 import com.example.InvestorRelationBackend.masterData.CashFlow;
+import com.example.InvestorRelationBackend.masterData.FinancialRatio;
 import com.example.InvestorRelationBackend.masterData.IncomeStatement;
 import com.example.InvestorRelationBackend.masterData.ShareHolderContactDetailsForm;
 import com.example.InvestorRelationBackend.masterData.ShareHolderDataForm;
@@ -123,6 +124,8 @@ public class Controller {
 
 	@GetMapping("/balanceSheet")
 	public List<BalanceSheetForm> getBalanceSheetData() throws SQLException {
+		System.out.println("getting Sheet");
+
 		return this.roleInterface.getBalanceSheetData();
 	}
 
@@ -178,4 +181,18 @@ public class Controller {
 		return this.roleInterface.getAllMeetingData();
 	}
 
+	@PostMapping("/ratio")
+	public String createFinancialRatio(@RequestBody FinancialRatio ratio) throws SQLException {
+		return this.roleInterface.createRatio(ratio);
+		
+	}
+	
+	@GetMapping("/ratio")
+	public List<FinancialRatio> getAllFinacialRatio() throws SQLException
+	{
+		return this.roleInterface.getFinacialRatio();
+	}
+	
+	
+	
 }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.example.InvestorRelationBackend.masterData.BalanceSheetForm;
 import com.example.InvestorRelationBackend.masterData.CashFlow;
+import com.example.InvestorRelationBackend.masterData.FinancialRatio;
 import com.example.InvestorRelationBackend.masterData.IncomeStatement;
 import com.example.InvestorRelationBackend.masterData.ShareHolderContactDetailsForm;
 import com.example.InvestorRelationBackend.masterData.ShareHolderDataForm;
@@ -75,6 +76,10 @@ public interface RoleServiceInterface {
 	String createMeetingDetails(ShareholderMeetingDetailsForm form) throws SQLException;
 
 	List<ShareholderMeetingDetailsForm> getAllMeetingData() throws SQLException;
+
+	String createRatio(FinancialRatio ratio) throws SQLException;
+
+	List<FinancialRatio> getFinacialRatio() throws SQLException;
 
 	
 

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.InvestorRelationBackend.masterData.BalanceSheetForm;
 import com.example.InvestorRelationBackend.masterData.CashFlow;
+import com.example.InvestorRelationBackend.masterData.FinancialRatio;
 import com.example.InvestorRelationBackend.masterData.IncomeStatement;
 import com.example.InvestorRelationBackend.masterData.ShareHolderContactDetailsForm;
 import com.example.InvestorRelationBackend.masterData.ShareHolderDataForm;
@@ -45,18 +46,15 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			String id = UUID.randomUUID().toString();
 			role.setId(id);
 
-			List<String> dashboardAccess = new ArrayList<>();
 //			Array array = conn.createArrayOf("VARCHAR", role.getDashboardAccess().toArray());
-			String array[] = role.getDashboardAccess();
-			Collections.addAll(dashboardAccess, array);
 
 			Date date = new Date();
 			preparedStatement.setString(1, id);
 			preparedStatement.setString(2, role.getRoleName());
 			preparedStatement.setString(3, role.getDescription());
 			preparedStatement.setString(4, role.getStatus());
-			preparedStatement.setString(5, dashboardAccess.toString());
-//			preparedStatement.setLong(6, date.getTime());
+			preparedStatement.setString(5, role.getDashboardAccess().toString());
+			preparedStatement.setLong(6, date.getTime());
 
 			int executeUpdate = preparedStatement.executeUpdate();
 			System.out.println(executeUpdate + " after role creation");
@@ -159,22 +157,21 @@ public class RoleServiceImpl implements RoleServiceInterface {
 	  model.setId(rs.getString(1));
 	  model.setRoleName(rs.getString(2));
 	  model.setDescription(rs.getString(3));
-	  model.setStatus(rs.getString(4));	
-	  
-	  String[] dash = new String[10];
-	  
+	  model.setStatus(rs.getString(4));		  
+	 
+	  String[] dash = new String[10];	  
 	  List<String> dashboard = new ArrayList<>();
 	  
 	  
 //	  ArrayList<String> vta = new ArrayList<>();
-	  dashboard.add(rs.getString());
+	  dashboard .add(rs.getString(1));
 //		roles.setVendorTemplateAccess(vta);
 		
 		
 	  Collections.addAll(dashboard, dash); 
 	  
 	  
-	  model.setDashboardAccess(dashboard); 	 
+//	  model.setDashboardAccess(dashboard); 	 
 	  
 	  allRoleList.add(model);
 	  
@@ -648,6 +645,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 	@Override
 	public String createShareHolderData(ShareHolderDataForm dataForm) throws SQLException {
+		System.out.println(dataForm+" data to be added");
 		try (Connection conn = DriverManager.getConnection(url, user, password)) {
 
 			PreparedStatement preparedStatement = null;
@@ -657,19 +655,19 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
-			dataForm.setClientId(id);
+			dataForm.setId(id);
 			preparedStatement.setString(1, id);
 			preparedStatement.setString(2, dataForm.getClientId());
-			preparedStatement.setString(3, dataForm.getPortfoliold());
+			preparedStatement.setString(3, dataForm.getPortfolioId());
 			preparedStatement.setString(4, dataForm.getFolio());
-			preparedStatement.setString(5, dataForm.getShareHolderName());
+			preparedStatement.setString(5, dataForm.getShareholderName());
 			preparedStatement.setString(6, dataForm.getHoldingValue());
 			preparedStatement.setString(7, dataForm.getHoldingPercentage());
-			preparedStatement.setString(8, dataForm.getMinorCode());
-			preparedStatement.setLong(9, date.getTime());
+			preparedStatement.setString(8, dataForm.getMinorcode());
+			preparedStatement.setString(9, dataForm.getDate());
 
 			int executeUpdate = preparedStatement.executeUpdate();
-			System.out.println(executeUpdate + " after Income Statement creation");
+			System.out.println(executeUpdate + " after Shareholder creation");
 
 			return dataForm.getClientId().toString();
 
@@ -691,13 +689,13 @@ public class RoleServiceImpl implements RoleServiceInterface {
 				ShareHolderDataForm form = new ShareHolderDataForm();
 				form.setId(rs.getString(1));
 				form.setClientId(rs.getString(2));
-				form.setPortfoliold(rs.getString(3));
+				form.setPortfolioId(rs.getString(3));
 				form.setFolio(rs.getString(4));
-				form.setClientId(rs.getString(5));
+				form.setShareholderName(rs.getString(5));
 				form.setHoldingValue(rs.getString(6));
 				form.setHoldingPercentage(rs.getString(7));
-				form.setMinorCode(rs.getString(8));
-				form.setDate(rs.getLong(9));
+				form.setMinorcode(rs.getString(8));
+				form.setDate(rs.getString(9));
 
 				holder.add(form);
 
@@ -725,12 +723,12 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			preparedStatement.setString(2, detailsForm.getName());
 			preparedStatement.setString(3, detailsForm.getPoc());
 			preparedStatement.setString(4, detailsForm.getEmail());
-			preparedStatement.setString(5, detailsForm.getMinorCode());
+			preparedStatement.setString(5, detailsForm.getMinorcode());
 			preparedStatement.setString(6, detailsForm.getAddress());
 			preparedStatement.setString(7, detailsForm.getContact());
 
 			int executeUpdate = preparedStatement.executeUpdate();
-			System.out.println(executeUpdate + " after Income Statement creation");
+			System.out.println(executeUpdate + " Contact creation");
 
 			return detailsForm.getId().toString();
 
@@ -755,14 +753,14 @@ public class RoleServiceImpl implements RoleServiceInterface {
 				form.setName(rs.getString(2));
 				form.setPoc(rs.getString(3));
 				form.setEmail(rs.getString(4));
-				form.setMinorCode(rs.getString(5));
+				form.setMinorcode(rs.getString(5));
 				form.setAddress(rs.getString(6));
 				form.setContact(rs.getString(7));
 
 				contact.add(form);
 
 			}
-			System.out.println("ShareHolderList" + contact);
+			System.out.println("Contact details " + contact);
 			System.out.println(contact.size());
 			return contact;
 		}
@@ -773,7 +771,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = DriverManager.getConnection(url, user, password)) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into meeting values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String query = "insert into meeting values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			Date date = new Date();
 
@@ -781,21 +779,22 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			String id = UUID.randomUUID().toString();
 			form.setId(id);
 			preparedStatement.setString(1, id);
-			preparedStatement.setLong(2, date.getTime());
-			preparedStatement.setLong(3, date.getTime());
-			preparedStatement.setLong(4, date.getTime());
-			preparedStatement.setString(5, form.getOrganization());
-			preparedStatement.setString(6, form.getStakeHolderType());
+			preparedStatement.setString(2,form.getDate());
+			preparedStatement.setString(3,form.getStartTime());
+			preparedStatement.setString(4,form.getEndTime());
+			preparedStatement.setString(5, form.getOrganisation());
+			preparedStatement.setString(6, form.getStakeholderType());
 			preparedStatement.setString(7, form.getMeetingType());
 			preparedStatement.setString(8, form.getSubject());
 			preparedStatement.setString(9, form.getLocation());
 			preparedStatement.setString(10, form.getStatus());
-			preparedStatement.setString(11, form.getComments());
-			preparedStatement.setString(12, form.getParticipent());
+			preparedStatement.setString(11, form.getComments());			
+			preparedStatement.setString(12, form.getParticipants());
 			preparedStatement.setString(13, form.getFeedback());
+			preparedStatement.setString(14, form.getBroker());
 
 			int executeUpdate = preparedStatement.executeUpdate();
-			System.out.println(executeUpdate + " after Income Statement creation");
+			System.out.println(executeUpdate + " after meeting data creation");
 
 			return form.getId().toString();
 
@@ -816,25 +815,86 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			while (rs.next()) {
 				ShareholderMeetingDetailsForm form = new ShareholderMeetingDetailsForm();
 				form.setId(rs.getString(1));
-				form.setDate(rs.getLong(2));
-				form.setStartTime(rs.getLong(3));
-				form.setEndTime(rs.getLong(4));
-				form.setOrganization(rs.getString(5));
-				form.setStakeHolderType(rs.getString(6));
+				form.setDate(rs.getString(2));
+				form.setStartTime(rs.getString(3));
+				form.setEndTime(rs.getString(4));
+				form.setOrganisation(rs.getString(5));
+				form.setStakeholderType(rs.getString(6));
 				form.setMeetingType(rs.getString(7));
 				form.setSubject(rs.getString(8));
 				form.setLocation(rs.getString(9));
 				form.setStatus(rs.getString(10));
 				form.setComments(rs.getString(11));
-				form.setParticipent(rs.getString(12));
+				form.setParticipants(rs.getString(12));
 				form.setFeedback(rs.getString(13));
+				form.setBroker(rs.getString(14));
 
 				meeting.add(form);
 
 			}
-			System.out.println("ShareHolderList" + meeting);
+			System.out.println("Meeting data" + meeting);
 			System.out.println(meeting.size());
 			return meeting;
+
+		}
+
+	}
+
+	@Override
+	public String createRatio(FinancialRatio ratio) throws SQLException {
+		// TODO Auto-generated method stub
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+
+			PreparedStatement preparedStatement = null;
+			String query = "insert into ratio values(?,?,?,?)";
+
+			preparedStatement = conn.prepareStatement(query);
+			String id = UUID.randomUUID().toString();
+			ratio.setId(id);
+
+//			Array array = conn.createArrayOf("VARCHAR", role.getDashboardAccess().toArray());
+
+			Date date = new Date();
+			preparedStatement.setString(1, id);
+			preparedStatement.setString(2, ratio.getFormulaName());
+			preparedStatement.setString(3, ratio.getFormulaType());
+			preparedStatement.setString(4, ratio.getFormula());
+			
+			int executeUpdate = preparedStatement.executeUpdate();
+			System.out.println(executeUpdate + " after role creation");
+
+			return ratio.getId().toString();
+
+		}
+
+	}
+
+	@Override
+	public List<FinancialRatio> getFinacialRatio() throws SQLException {
+		// TODO Auto-generated method stub
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+
+			Statement statement = conn.createStatement();
+
+			String query = "select * from ratio";
+
+			ResultSet rs = statement.executeQuery(query);
+
+			List<FinancialRatio> holder = new ArrayList<>();
+			while (rs.next()) {
+				FinancialRatio form = new FinancialRatio();
+				form.setId(rs.getString(1));
+				form.setFormulaName(rs.getString(2));
+				form.setFormulaType(rs.getString(3));
+				form.setFormula(rs.getString(4));
+				
+
+				holder.add(form);
+
+			}
+			System.out.println("ShareHolderList" + holder);
+			System.out.println(holder.size());
+			return holder;
 
 		}
 

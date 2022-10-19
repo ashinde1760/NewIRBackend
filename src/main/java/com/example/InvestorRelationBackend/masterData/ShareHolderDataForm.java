@@ -3,22 +3,49 @@ package com.example.InvestorRelationBackend.masterData;
 public class ShareHolderDataForm {
 
 	private String id;
-	
+
 	private String clientId;
-	
-	private String portfoliold;
-	
+
+	private String portfolioId;
+
 	private String folio;
-	
-	private String shareHolderName;
-	
+
+	private String shareholderName;
+
 	private String holdingValue;
-	
+
 	private String holdingPercentage;
-	
-	private String minorCode;
-	
-	private long date;
+
+	private String minorcode;
+
+	private String date;
+
+	public ShareHolderDataForm() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ShareHolderDataForm(String id, String clientId, String portfolioId, String folio, String shareholderName,
+			String holdingValue, String holdingPercentage, String minorcode, String date) {
+		super();
+		this.id = id;
+		this.clientId = clientId;
+		this.portfolioId = portfolioId;
+		this.folio = folio;
+		this.shareholderName = shareholderName;
+		this.holdingValue = holdingValue;
+		this.holdingPercentage = holdingPercentage;
+		this.minorcode = minorcode;
+		this.date = date;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getClientId() {
 		return clientId;
@@ -28,12 +55,12 @@ public class ShareHolderDataForm {
 		this.clientId = clientId;
 	}
 
-	public String getPortfoliold() {
-		return portfoliold;
+	public String getPortfolioId() {
+		return portfolioId;
 	}
 
-	public void setPortfoliold(String portfoliold) {
-		this.portfoliold = portfoliold;
+	public void setPortfolioId(String portfolioId) {
+		this.portfolioId = portfolioId;
 	}
 
 	public String getFolio() {
@@ -44,12 +71,12 @@ public class ShareHolderDataForm {
 		this.folio = folio;
 	}
 
-	public String getShareHolderName() {
-		return shareHolderName;
+	public String getShareholderName() {
+		return shareholderName;
 	}
 
-	public void setShareHolderName(String shareHolderName) {
-		this.shareHolderName = shareHolderName;
+	public void setShareholderName(String shareholderName) {
+		this.shareholderName = shareholderName;
 	}
 
 	public String getHoldingValue() {
@@ -68,61 +95,28 @@ public class ShareHolderDataForm {
 		this.holdingPercentage = holdingPercentage;
 	}
 
-	public String getMinorCode() {
-		return minorCode;
+	public String getMinorcode() {
+		return minorcode;
 	}
 
-	public void setMinorCode(String minorCode) {
-		this.minorCode = minorCode;
+	public void setMinorcode(String minorcode) {
+		this.minorcode = minorcode;
 	}
 
-	public long getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(long date) {
+	public void setDate(String date) {
 		this.date = date;
-	}
-
-	
-
-	public ShareHolderDataForm() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	@Override
 	public String toString() {
-		return "ShareHolderDataForm [id=" + id + ", clientId=" + clientId + ", portfoliold=" + portfoliold + ", folio="
-				+ folio + ", shareHolderName=" + shareHolderName + ", holdingValue=" + holdingValue
-				+ ", holdingPercentage=" + holdingPercentage + ", minorCode=" + minorCode + ", date=" + date + "]";
+		return "ShareHolderDataForm [id=" + id + ", clientId=" + clientId + ", portfolioId=" + portfolioId + ", folio="
+				+ folio + ", shareholderName=" + shareholderName + ", holdingValue=" + holdingValue
+				+ ", holdingPercentage=" + holdingPercentage + ", minorcode=" + minorcode + ", date=" + date + "]";
 	}
 
-	public ShareHolderDataForm(String id, String clientId, String portfoliold, String folio, String shareHolderName,
-			String holdingValue, String holdingPercentage, String minorCode, long date) {
-		super();
-		this.id = id;
-		this.clientId = clientId;
-		this.portfoliold = portfoliold;
-		this.folio = folio;
-		this.shareHolderName = shareHolderName;
-		this.holdingValue = holdingValue;
-		this.holdingPercentage = holdingPercentage;
-		this.minorCode = minorCode;
-		this.date = date;
-	}
-	
-	
-	
-	
-	
 	
 }
