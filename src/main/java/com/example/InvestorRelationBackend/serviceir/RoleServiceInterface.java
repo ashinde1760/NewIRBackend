@@ -20,11 +20,11 @@ public interface RoleServiceInterface {
 
 	String createRole1(RoleModel model) throws SQLException;
 
-	RoleModel getRoleById(String id) throws SQLException;
+//	RoleModel getRoleById(String id) throws SQLException;
 
 	List<User> getAllUsers() throws SQLException;
 
-	void createRole(RoleModel model) throws SQLException;
+//	void createRole(RoleModel model) throws SQLException;
 
 	RoleModel updateRole(RoleModel model, String id) throws SQLException;
 
@@ -43,7 +43,7 @@ public interface RoleServiceInterface {
 //	Role operations
 	int deleteRole(String id) throws SQLException;
 
-	ArrayList<RoleModel> getAllRoles() throws SQLException;
+	List<RoleModel> getAllRoles() throws SQLException;
 	
 	void deleteUser(String id) throws SQLException;
 	

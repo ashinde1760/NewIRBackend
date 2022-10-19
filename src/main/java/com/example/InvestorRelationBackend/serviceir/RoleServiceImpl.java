@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -38,26 +39,29 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = DriverManager.getConnection(url, user, password)) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into role1 values(?,?,?,?,?,?)";
+			String query = "insert into role1 values(?,?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
 			role.setId(id);
 
-			Array array = conn.createArrayOf("VARCHAR", role.getDashboardAccess().toArray());
+			List<String> dashboardAccess = new ArrayList<>();
+//			Array array = conn.createArrayOf("VARCHAR", role.getDashboardAccess().toArray());
+			String array[] = role.getDashboardAccess();
+			Collections.addAll(dashboardAccess, array);
 
 			Date date = new Date();
-			preparedStatement.setString(1, role.getId());
+			preparedStatement.setString(1, id);
 			preparedStatement.setString(2, role.getRoleName());
 			preparedStatement.setString(3, role.getDescription());
 			preparedStatement.setString(4, role.getStatus());
-			preparedStatement.setArray(5, array);
-			preparedStatement.setLong(6, date.getTime());
+			preparedStatement.setString(5, dashboardAccess.toString());
+//			preparedStatement.setLong(6, date.getTime());
 
 			int executeUpdate = preparedStatement.executeUpdate();
 			System.out.println(executeUpdate + " after role creation");
 
-			return role.getRoleName().toString();
+			return role.getId().toString();
 
 		}
 
@@ -85,106 +89,102 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		}
 	}
 
-	@Override
-	public void createRole(RoleModel model) throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
-			String query = "Insert into role1(rolename, description, status, dashboard, createdon)"
-					+ "VALUES(?,?,?,?,?)";
+	/*
+	 * @Override public void createRole(RoleModel model) throws SQLException { try
+	 * (Connection conn = DriverManager.getConnection(url, user, password)) { String
+	 * query =
+	 * "Insert into role1(rolename, description, status, dashboard, createdon)" +
+	 * "VALUES(?,?,?,?,?)";
+	 * 
+	 * PreparedStatement pstmt = conn.prepareStatement(query,
+	 * Statement.RETURN_GENERATED_KEYS);
+	 * 
+	 * ArrayList<String> arrdas = new ArrayList<String>();
+	 * 
+	 * Date nowDate = new Date();
+	 * 
+	 * // System.out.println(model.getDashboardAccess());
+	 * 
+	 * pstmt.setString(1, model.getRoleName()); pstmt.setString(2,
+	 * model.getDescription()); pstmt.setString(3, model.getStatus());
+	 * arrdas.addAll(model.getDashboardAccess()); pstmt.setString(4,
+	 * arrdas.toString()); System.out.println("Inside createROle");
+	 * 
+	 * pstmt.setLong(5, nowDate.getTime()); // pstmt.setDate(7,
+	 * model.getCreatedOn()); // pstmt.setDate(8, model.getLastEdit());
+	 * 
+	 * System.out.println(pstmt); pstmt.executeUpdate(); } }
+	 */
+	/*
+	 * @Override public RoleModel getRoleById(String id) throws SQLException {
+	 * PreparedStatement preparedStatement = null; RoleModel model = new
+	 * RoleModel(); try (Connection conn = DriverManager.getConnection(url, user,
+	 * password)) { Statement stmt = conn.createStatement();
+	 * 
+	 * String query = "Select * from role1 where id =" + "'" + id + "'"; ResultSet
+	 * rs = stmt.executeQuery(query); ArrayList<String> arrdas = new
+	 * ArrayList<String>();
+	 * 
+	 * while (rs.next()) { model.setId(id); model.setRoleName(rs.getString(2));
+	 * model.setDescription(rs.getString(3)); model.setStatus(rs.getString(4)); //
+	 * ArrayList<String> dashboard = (ArrayList<String>) rs.getArray(4);
+	 * arrdas.add(rs.getString(5)); model.setDashboardAccess(arrdas);
+	 * model.setCreatedOn(rs.getLong(6));
+	 * 
+	 * // model.setCreatedOn(query); // model.setLastEdit(rs.getString(9));
+	 * 
+	 * }
+	 * 
+	 * } return model;
+	 * 
+	 * }
+	 */
 
-			PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-
-			ArrayList<String> arrdas = new ArrayList<String>();
-
-			Date nowDate = new Date();
-
-//			System.out.println(model.getDashboardAccess());
-
-			pstmt.setString(1, model.getRoleName());
-			pstmt.setString(2, model.getDescription());
-			pstmt.setString(3, model.getStatus());
-			arrdas.addAll(model.getDashboardAccess());
-			pstmt.setString(4, arrdas.toString());
-			System.out.println("Inside createROle");
-
-			pstmt.setLong(5, nowDate.getTime());
-//			pstmt.setDate(7, model.getCreatedOn());
-//			pstmt.setDate(8, model.getLastEdit());
-
-			System.out.println(pstmt);
-			pstmt.executeUpdate();
-		}
-	}
-
-	@Override
-	public RoleModel getRoleById(String id) throws SQLException {
-		PreparedStatement preparedStatement = null;
-		RoleModel model = new RoleModel();
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
-			Statement stmt = conn.createStatement();
-
-			String query = "Select * from role1 where id =" + "'" + id + "'";
-			ResultSet rs = stmt.executeQuery(query);
-			ArrayList<String> arrdas = new ArrayList<String>();
-
-			while (rs.next()) {
-				model.setId(id);
-				model.setRoleName(rs.getString(2));
-				model.setDescription(rs.getString(3));
-				model.setStatus(rs.getString(4));
-//				ArrayList<String> dashboard = (ArrayList<String>) rs.getArray(4);
-				arrdas.add(rs.getString(5));
-				model.setDashboardAccess(arrdas);
-				model.setCreatedOn(rs.getLong(6));
-
-//				model.setCreatedOn(query);
-//				model.setLastEdit(rs.getString(9));
-
-			}
-
-		}
-		return model;
-
-	}
-
-	@Override
-	public ArrayList<RoleModel> getAllRoles() throws SQLException {
-
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
-			Statement stmt = conn.createStatement();
-
-			String query = "Select * from role1";
-			ResultSet rs = stmt.executeQuery(query);
-
-			ArrayList<RoleModel> allRoleList = new ArrayList();
-			int count = 0;
-
-			while (rs.next()) {
-				ArrayList<String> arrdas = new ArrayList<String>();
-//				ArrayList<String> arrinj = new ArrayList();
-//				ArrayList<String> arrcon = new ArrayList();
-
-				RoleModel model = new RoleModel();
-				model.setId(rs.getString(1));
-				model.setRoleName(rs.getString(2));
-				model.setDescription(rs.getString(3));
-				model.setStatus(rs.getString(4));
-//				ArrayList<String> dashboard = (ArrayList<String>) rs.getArray(4);
-				arrdas.add(rs.getString(5));
-				model.setDashboardAccess(arrdas);
-				model.setCreatedOn(rs.getLong(6));
-//				model.setCreatedOn(query);
-//				model.setLastEdit(rs.getString(9));
-
-				allRoleList.add(model);
-
-				System.out.println("added");
-			}
-			System.out.println(allRoleList.size());
-			return allRoleList;
-
-		}
-
-	}
+	@Override public List<RoleModel> getAllRoles() throws SQLException {
+	  
+	  try (Connection conn = DriverManager.getConnection(url, user, password)) {
+	  Statement stmt = conn.createStatement();
+	  
+	  String query = "Select * from role1";
+	  ResultSet rs =
+	  stmt.executeQuery(query);
+	  
+	  List<RoleModel> allRoleList = new ArrayList<>();
+	  int count = 0;
+	  
+	  while (rs.next()) 
+	  { 
+	
+	  RoleModel model = new RoleModel();
+	  model.setId(rs.getString(1));
+	  model.setRoleName(rs.getString(2));
+	  model.setDescription(rs.getString(3));
+	  model.setStatus(rs.getString(4));	
+	  
+	  String[] dash = new String[10];
+	  
+	  List<String> dashboard = new ArrayList<>();
+	  
+	  
+//	  ArrayList<String> vta = new ArrayList<>();
+	  dashboard.add(rs.getString());
+//		roles.setVendorTemplateAccess(vta);
+		
+		
+	  Collections.addAll(dashboard, dash); 
+	  
+	  
+	  model.setDashboardAccess(dashboard); 	 
+	  
+	  allRoleList.add(model);
+	  
+	  System.out.println("added"); } System.out.println(allRoleList.size());
+	  return  allRoleList;
+	  }
+	  
+	  
+	 
+	 }
 
 	// user
 
@@ -781,16 +781,16 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			String id = UUID.randomUUID().toString();
 			form.setId(id);
 			preparedStatement.setString(1, id);
-			preparedStatement.setLong(2,date.getTime());
-			preparedStatement.setLong(3,date.getTime());
-			preparedStatement.setLong(4,date.getTime());
+			preparedStatement.setLong(2, date.getTime());
+			preparedStatement.setLong(3, date.getTime());
+			preparedStatement.setLong(4, date.getTime());
 			preparedStatement.setString(5, form.getOrganization());
 			preparedStatement.setString(6, form.getStakeHolderType());
 			preparedStatement.setString(7, form.getMeetingType());
 			preparedStatement.setString(8, form.getSubject());
 			preparedStatement.setString(9, form.getLocation());
 			preparedStatement.setString(10, form.getStatus());
-			preparedStatement.setString(11, form.getComments());			
+			preparedStatement.setString(11, form.getComments());
 			preparedStatement.setString(12, form.getParticipent());
 			preparedStatement.setString(13, form.getFeedback());
 
@@ -801,9 +801,6 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 		}
 	}
-	
-
-	
 
 	@Override
 	public List<ShareholderMeetingDetailsForm> getAllMeetingData() throws SQLException {
@@ -842,6 +839,4 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		}
 
 	}
-	}
-
-
+}

@@ -11,7 +11,7 @@ public class RoleModel {
 	private String roleName;
 	private String description;
 	private String status;
-	private ArrayList<String> dashboardAccess;
+	private String dashboardAccess[]=new String[5];
 	
 	private Map<String, String> dashboard;
 	
@@ -51,11 +51,11 @@ public class RoleModel {
 		this.status = status;
 	}
 
-	public ArrayList<String> getDashboardAccess() {
+	public String[] getDashboardAccess() {
 		return dashboardAccess;
 	}
 
-	public void setDashboardAccess(ArrayList<String> dashboardAccess) {
+	public void setDashboardAccess(String[] dashboardAccess) {
 		this.dashboardAccess = dashboardAccess;
 	}
 
