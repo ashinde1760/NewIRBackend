@@ -136,7 +136,7 @@ public class Controller {
 	}
 
 	@GetMapping("/incomeStatement")
-	public List<BalanceSheetForm> getIncomeData() throws SQLException {
+	public List<IncomeStatement> getIncomeData() throws SQLException {
 		return this.roleInterface.getIncomeData();
 	}
 

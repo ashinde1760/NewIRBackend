@@ -561,29 +561,29 @@ public class RoleServiceImpl implements RoleServiceInterface {
 	}
 
 	@Override
-	public List<BalanceSheetForm> getIncomeData() throws SQLException {
+	public List<IncomeStatement> getIncomeData() throws SQLException {
 		try (Connection conn = DriverManager.getConnection(url, user, password)) {
 			Statement stmt = conn.createStatement();
 
 			String query = "Select * from incomeStatement";
 			ResultSet rs = stmt.executeQuery(query);
 
-			List<BalanceSheetForm> income = new ArrayList<>();
+			List<IncomeStatement> incomeData = new ArrayList<>();
 			int count = 0;
 
 			while (rs.next()) {
-				BalanceSheetForm balanceSheetForm = new BalanceSheetForm();
+				IncomeStatement balanceSheetForm = new IncomeStatement();
 				balanceSheetForm.setId(rs.getString(1));
 				balanceSheetForm.setLineItem(rs.getString(2));
 				balanceSheetForm.setAlternativeName(rs.getString(3));
 				balanceSheetForm.setType(rs.getString(4));
 
-				income.add(balanceSheetForm);
+				incomeData.add(balanceSheetForm);
 
 			}
 			System.out.println("List of balance Sheet form");
-			System.out.println(income.size());
-			return income;
+			System.out.println(incomeData.size());
+			return incomeData;
 
 		}
 

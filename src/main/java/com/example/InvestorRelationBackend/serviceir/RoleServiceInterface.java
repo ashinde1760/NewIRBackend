@@ -59,7 +59,7 @@ public interface RoleServiceInterface {
 
 	String createIncomeForm(IncomeStatement incomeStatement) throws SQLException;
 
-	List<BalanceSheetForm> getIncomeData() throws SQLException;
+	List<IncomeStatement> getIncomeData() throws SQLException;
 
 	String createCashFlow(CashFlow cashFlow) throws SQLException;
 
