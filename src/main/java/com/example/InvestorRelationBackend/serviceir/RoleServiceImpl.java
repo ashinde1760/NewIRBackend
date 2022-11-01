@@ -17,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.example.InvestorRelationBackend.configuration.InvestorDatabaseUtill;
+//import com.example.InvestorRelationBackend.configuration.InvestorDatabaseUtill1;
+//import com.example.InvestorRelationBackend.configuration.InvestorDatabaseUtill;
 import com.example.InvestorRelationBackend.masterData.BalanceSheetForm;
 import com.example.InvestorRelationBackend.masterData.CashFlow;
 import com.example.InvestorRelationBackend.masterData.FinancialRatio;
@@ -30,17 +33,17 @@ import com.example.InvestorRelationBackend.modelir.User;
 @Service
 public class RoleServiceImpl implements RoleServiceInterface {
 
-	private final static String url = "jdbc:postgresql://localhost/postgres";
-	private final static String user = "postgres";
-	private final static String password = "Shiv";
+//	private final static String url = "jdbc:postgresql://localhost/postgres";
+//	private final static String user = "postgres";
+//	private final static String password = "Shiv";
 
 	@Override
 	public String createRole1(RoleModel role) throws SQLException {
 
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn=InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into role1 values(?,?,?,?,?)";
+			String query = "insert into rolemodel values(?,?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
@@ -61,16 +64,20 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			return role.getId().toString();
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 	}
 
 	@Override
 	public RoleModel updateRole(RoleModel role, String id) throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "update role1 set rolename=?, description=?,status=?,dashboard=? where id=?";
+			String query = "update rolemodel set rolename=?, description=?,status=?,dashboard=? where id=?";
 			preparedStatement = conn.prepareStatement(query);
 
 			Date date = new Date();
@@ -84,7 +91,11 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			System.out.println(executeUpdate + " after role updation");
 
 			return role;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return role;
 	}
 
 	/*
@@ -140,10 +151,10 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 	@Override public List<RoleModel> getAllRoles() throws SQLException {
 	  
-	  try (Connection conn = DriverManager.getConnection(url, user, password)) {
+	  try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 	  Statement stmt = conn.createStatement();
 	  
-	  String query = "Select * from role1";
+	  String query = "Select * from rolemodel";
 	  ResultSet rs =
 	  stmt.executeQuery(query);
 	  
@@ -177,20 +188,25 @@ public class RoleServiceImpl implements RoleServiceInterface {
 	  
 	  System.out.println("added"); } System.out.println(allRoleList.size());
 	  return  allRoleList;
-	  }
+	  } catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return null;
 	  
 	  
 	 
 	 }
 
+	
 	// user
 
 	@Override
 	public String createuser(User user1) throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into user11 values(?,?,?,?,?,?,?,?,?,?)";
+			String query = "insert into user1 values(?,?,?,?,?,?,?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
@@ -212,7 +228,11 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			System.out.println(executeUpdate + " after user creation");
 
 			return user1.getId();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 //		public ArrayList<User> getAllUsers() throws SQLException {
 //
@@ -256,10 +276,10 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 	@Override
 	public User getAllU() throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from user11";
+			String query = "Select * from user1";
 			ResultSet rs = stmt.executeQuery(query);
 
 			User userModel = new User();
@@ -278,7 +298,11 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			}
 
 			return userModel;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
@@ -286,10 +310,10 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 		PreparedStatement preparedStatement = null;
 
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "delete from role1 where id = ?";
+			String query = "delete from rolemodel where id = ?";
 //			ResultSet rs = stmt.executeQuery(query);
 			System.out.println("Before deletion");
 			preparedStatement = conn.prepareStatement("delete from role1 where id = ?");
@@ -299,16 +323,20 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			System.out.println(executeUpdate);
 			System.out.println("after execution");
 			return executeUpdate;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return 0;
 
 	}
 
 	@Override
 	public List<User> getAllUsers() throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from user11";
+			String query = "Select * from user1";
 			ResultSet rs = stmt.executeQuery(query);
 
 			ArrayList<User> allUsersList1 = new ArrayList();
@@ -334,20 +362,24 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			System.out.println(allUsersList1.size());
 			return allUsersList1;
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 	}
 
 	@Override
 	public List<User> getUserByRoleId(String id) throws SQLException {
 		User model = new User();
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 //			Statement stmt = conn.createStatement();
 			PreparedStatement pstmt = null;
 
 			List<User> users = new ArrayList<>();
 
-			String query = "Select * from user11 where role=?";
+			String query = "Select * from user1 where role=?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, id);
 			ResultSet rs = pstmt.executeQuery();
@@ -360,7 +392,11 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			}
 			return users;
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 	}
 
@@ -384,10 +420,10 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 		PreparedStatement preparedStatement = null;
 		User model = new User();
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from user11 where id =" + "'" + id + "'";
+			String query = "Select * from user1 where id =" + "'" + id + "'";
 			ResultSet rs = stmt.executeQuery(query);
 			ArrayList<String> arrdas = new ArrayList<String>();
 
@@ -404,16 +440,19 @@ public class RoleServiceImpl implements RoleServiceInterface {
 				model.setCreatedOn(rs.getLong(10));
 			}
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return model;
 	}
 
 	@Override
 	public String updateUser(User user1, String id) throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "update user11 set firstName=?, lastName=?, email=?, mobilenumber=?,domain=?,assignedname=?,role=?,status=?,date=? where id=?";
+			String query = "update user1 set firstName=?, lastName=?, email=?, mobilenumber=?,domain=?,assignedname=?,role=?,status=?,date=? where id=?";
 			preparedStatement = conn.prepareStatement(query);
 
 			Date date = new Date();
@@ -432,35 +471,42 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			System.out.println(executeUpdate + " after User updation");
 
 			return user1.getId();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return id;
 	}
 
 	@Override
 	public void deleteUser(String id) throws SQLException {
 		PreparedStatement preparedStatement = null;
 
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 //			Statement stmt = conn.createStatement();
 
-			String query = "delete from user11 where id = ?";
+			String query = "delete from user1 where id = ?";
 
 			preparedStatement = conn.prepareStatement(query);
 //			preparedStatement.executeUpdate(query);
 //			preparedStatement = conn.prepareStatement("delete from role1 where id = ?");
 			preparedStatement.setString(1, id);
 			preparedStatement.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
 
 	@Override
 	public List<RoleModel> getRoleByStatus() throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 //			PreparedStatement pstmt = null;
 
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from role1 where status=" + "'Active'";
+			String query = "Select * from rolemodel where status=" + "'Active'";
 			ResultSet rs = stmt.executeQuery(query);
 
 			ArrayList<RoleModel> roleData = new ArrayList();
@@ -478,17 +524,21 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			System.out.println(roleData.size());
 			return roleData;
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 	}
 
 	@Override
 	public String createBalanceSheetForm(BalanceSheetForm balanceSheetForm) throws SQLException {
 
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into balanceSheet values(?,?,?,?)";
+			String query = "insert into balanceSheetFrom values(?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
@@ -503,16 +553,20 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			return balanceSheetForm.getId().toString();
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 	}
 
 	@Override
 	public List<BalanceSheetForm> getBalanceSheetData() throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from balanceSheet";
+			String query = "Select * from balanceSheetFrom";
 			ResultSet rs = stmt.executeQuery(query);
 
 			List<BalanceSheetForm> sheet = new ArrayList<>();
@@ -532,16 +586,20 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			System.out.println(sheet.size());
 			return sheet;
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 	}
 
 	@Override
 	public String createIncomeForm(IncomeStatement incomeStatement) throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn =InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into incomeStatement values(?,?,?,?)";
+			String query = "insert into incomestatement values(?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
@@ -556,16 +614,20 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			return incomeStatement.getId().toString();
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 	}
 
 	@Override
 	public List<IncomeStatement> getIncomeData() throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from incomeStatement";
+			String query = "Select * from incomestatement";
 			ResultSet rs = stmt.executeQuery(query);
 
 			List<IncomeStatement> incomeData = new ArrayList<>();
@@ -585,16 +647,20 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			System.out.println(incomeData.size());
 			return incomeData;
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 	}
 
 	@Override
 	public String createCashFlow(CashFlow cashFlow) throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into cashFlow values(?,?,?,?)";
+			String query = "insert into cashflow values(?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
@@ -609,15 +675,19 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			return cashFlow.getId().toString();
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
 	public List<CashFlow> getCashFlowData() throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from cashFlow";
+			String query = "Select * from cashflow";
 			ResultSet rs = stmt.executeQuery(query);
 
 			List<CashFlow> cashflow = new ArrayList<>();
@@ -639,17 +709,21 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			return cashflow;
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 	}
 
 	@Override
 	public String createShareHolderData(ShareHolderDataForm dataForm) throws SQLException {
 		System.out.println(dataForm+" data to be added");
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into shareholder values(?,?,?,?,?,?,?,?,?)";
+			String query = "insert into shareholderdataform values(?,?,?,?,?,?,?,?,?)";
 
 			Date date = new Date();
 
@@ -671,16 +745,20 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			return dataForm.getClientId().toString();
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
 	public List<ShareHolderDataForm> getShareHolderData() throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			Statement statement = conn.createStatement();
 
-			String query = "select * from shareholder";
+			String query = "select * from shareholderdataform";
 
 			ResultSet rs = statement.executeQuery(query);
 
@@ -704,17 +782,21 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			System.out.println(holder.size());
 			return holder;
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 	}
 
 	@Override
 	public String createContact(ShareHolderContactDetailsForm detailsForm) throws SQLException {
 
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn =InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into contact values(?,?,?,?,?,?,?)";
+			String query = "insert into shareholdercontact values(?,?,?,?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String clientId = UUID.randomUUID().toString();
@@ -732,17 +814,21 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			return detailsForm.getId().toString();
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
 	public List<ShareHolderContactDetailsForm> getContactDetails() throws SQLException {
 
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			Statement statement = conn.createStatement();
 
-			String query = "select * from contact";
+			String query = "select * from shareholdercontact";
 
 			ResultSet rs = statement.executeQuery(query);
 
@@ -763,15 +849,19 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			System.out.println("Contact details " + contact);
 			System.out.println(contact.size());
 			return contact;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
 	public String createMeetingDetails(ShareholderMeetingDetailsForm form) throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into meeting values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String query = "insert into shareholdermeeting values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			Date date = new Date();
 
@@ -798,16 +888,20 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			return form.getId().toString();
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
 	public List<ShareholderMeetingDetailsForm> getAllMeetingData() throws SQLException {
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			Statement statement = conn.createStatement();
 
-			String query = "select * from meeting";
+			String query = "select * from shareholdermeeting";
 
 			ResultSet rs = statement.executeQuery(query);
 
@@ -836,17 +930,21 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			System.out.println(meeting.size());
 			return meeting;
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 	}
 
 	@Override
 	public String createRatio(FinancialRatio ratio) throws SQLException {
 		// TODO Auto-generated method stub
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into ratio values(?,?,?,?)";
+			String query = "insert into financialRatio values(?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
@@ -865,18 +963,22 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			return ratio.getId().toString();
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 	}
 
 	@Override
 	public List<FinancialRatio> getFinacialRatio() throws SQLException {
 		// TODO Auto-generated method stub
-		try (Connection conn = DriverManager.getConnection(url, user, password)) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			Statement statement = conn.createStatement();
 
-			String query = "select * from ratio";
+			String query = "select * from financialRatio";
 
 			ResultSet rs = statement.executeQuery(query);
 
@@ -896,7 +998,11 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			System.out.println(holder.size());
 			return holder;
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 
 	}
 }
