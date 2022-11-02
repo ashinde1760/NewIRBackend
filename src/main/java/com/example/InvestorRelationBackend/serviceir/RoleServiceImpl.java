@@ -43,7 +43,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn=InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into rolemodel values(?,?,?,?,?)";
+			String query = "insert into InvestorDB.dbo.rolemodel values(?,?,?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
@@ -77,7 +77,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "update rolemodel set rolename=?, description=?,status=?,dashboard=? where id=?";
+			String query = "update InvestorDB.dbo.rolemodel set rolename=?, description=?,status=?,dashboardAccess=? where id=?";
 			preparedStatement = conn.prepareStatement(query);
 
 			Date date = new Date();
@@ -154,7 +154,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 	  try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 	  Statement stmt = conn.createStatement();
 	  
-	  String query = "Select * from rolemodel";
+	  String query = "Select * from InvestorDB.dbo.rolemodel";
 	  ResultSet rs =
 	  stmt.executeQuery(query);
 	  
@@ -206,7 +206,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into user1 values(?,?,?,?,?,?,?,?,?,?)";
+			String query = "insert into InvestorDB.dbo.user1 values(?,?,?,?,?,?,?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
@@ -279,7 +279,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from user1";
+			String query = "Select * from InvestorDB.dbo.user1";
 			ResultSet rs = stmt.executeQuery(query);
 
 			User userModel = new User();
@@ -313,7 +313,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "delete from rolemodel where id = ?";
+			String query = "delete from InvestorDB.dbo.rolemodel where id = ?";
 //			ResultSet rs = stmt.executeQuery(query);
 			System.out.println("Before deletion");
 			preparedStatement = conn.prepareStatement("delete from role1 where id = ?");
@@ -336,7 +336,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from user1";
+			String query = "Select * from InvestorDB.dbo.user1";
 			ResultSet rs = stmt.executeQuery(query);
 
 			ArrayList<User> allUsersList1 = new ArrayList();
@@ -379,7 +379,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			List<User> users = new ArrayList<>();
 
-			String query = "Select * from user1 where role=?";
+			String query = "Select * from InvestorDB.dbo.user1 where role=?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, id);
 			ResultSet rs = pstmt.executeQuery();
@@ -423,7 +423,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from user1 where id =" + "'" + id + "'";
+			String query = "Select * from InvestorDB.dbo.user1 where userid =" + "'" + id + "'";
 			ResultSet rs = stmt.executeQuery(query);
 			ArrayList<String> arrdas = new ArrayList<String>();
 
@@ -452,7 +452,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "update user1 set firstName=?, lastName=?, email=?, mobilenumber=?,domain=?,assignedname=?,role=?,status=?,date=? where id=?";
+			String query = "update InvestorDB.dbo.user1 set firstName=?, lastName=?, email=?, mobilenumber=?,domain=?,assignedname=?,role=?,status=?,createdOn=? where userid=?";
 			preparedStatement = conn.prepareStatement(query);
 
 			Date date = new Date();
@@ -485,7 +485,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 //			Statement stmt = conn.createStatement();
 
-			String query = "delete from user1 where id = ?";
+			String query = "delete from InvestorDB.dbo.user1 where userid = ?";
 
 			preparedStatement = conn.prepareStatement(query);
 //			preparedStatement.executeUpdate(query);
@@ -506,7 +506,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from rolemodel where status=" + "'Active'";
+			String query = "Select * from InvestorDB.dbo.rolemodel where status=" + "'Active'";
 			ResultSet rs = stmt.executeQuery(query);
 
 			ArrayList<RoleModel> roleData = new ArrayList();
@@ -538,7 +538,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into balanceSheetFrom values(?,?,?,?)";
+			String query = "insert into InvestorDB.dbo.balanceSheetFrom values(?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
@@ -566,7 +566,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from balanceSheetFrom";
+			String query = "Select * from InvestorDB.dbo.balanceSheetFrom";
 			ResultSet rs = stmt.executeQuery(query);
 
 			List<BalanceSheetForm> sheet = new ArrayList<>();
@@ -599,7 +599,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn =InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into incomestatement values(?,?,?,?)";
+			String query = "insert into InvestorDB.dbo.incomestatement values(?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
@@ -627,7 +627,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from incomestatement";
+			String query = "Select * from InvestorDB.dbo.incomestatement";
 			ResultSet rs = stmt.executeQuery(query);
 
 			List<IncomeStatement> incomeData = new ArrayList<>();
@@ -660,7 +660,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into cashflow values(?,?,?,?)";
+			String query = "insert into InvestorDB.dbo.cashflow values(?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
@@ -687,7 +687,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "Select * from cashflow";
+			String query = "Select * from InvestorDB.dbo.cashflow";
 			ResultSet rs = stmt.executeQuery(query);
 
 			List<CashFlow> cashflow = new ArrayList<>();
@@ -723,7 +723,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into shareholderdataform values(?,?,?,?,?,?,?,?,?)";
+			String query = "insert into InvestorDB.dbo.shareholderdataform values(?,?,?,?,?,?,?,?,?)";
 
 			Date date = new Date();
 
@@ -758,7 +758,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			Statement statement = conn.createStatement();
 
-			String query = "select * from shareholderdataform";
+			String query = "select * from InvestorDB.dbo.shareholderdataform";
 
 			ResultSet rs = statement.executeQuery(query);
 
@@ -796,7 +796,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn =InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into shareholdercontact values(?,?,?,?,?,?,?)";
+			String query = "insert into InvestorDB.dbo.shareholdercontact values(?,?,?,?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String clientId = UUID.randomUUID().toString();
@@ -828,7 +828,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			Statement statement = conn.createStatement();
 
-			String query = "select * from shareholdercontact";
+			String query = "select * from InvestorDB.dbo.shareholdercontact";
 
 			ResultSet rs = statement.executeQuery(query);
 
@@ -861,7 +861,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into shareholdermeeting values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String query = "insert into InvestorDB.dbo.shareholdermeeting values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			Date date = new Date();
 
@@ -901,7 +901,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			Statement statement = conn.createStatement();
 
-			String query = "select * from shareholdermeeting";
+			String query = "select * from InvestorDB.dbo.shareholdermeeting";
 
 			ResultSet rs = statement.executeQuery(query);
 
@@ -944,7 +944,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into financialRatio values(?,?,?,?)";
+			String query = "insert into InvestorDB.dbo.financialRatio values(?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
@@ -978,7 +978,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			Statement statement = conn.createStatement();
 
-			String query = "select * from financialRatio";
+			String query = "select * from InvestorDB.dbo.financialRatio";
 
 			ResultSet rs = statement.executeQuery(query);
 
