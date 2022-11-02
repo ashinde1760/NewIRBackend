@@ -20,8 +20,8 @@ public class InvestorDatabaseUtill {
 		
 		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		String url="jdbc:sqlserver://localhost ;encrypt=true;trustServerCertificate=true";
-		String user="sa";
-		String password="sqlserver";
+		String user="Anemoi";
+		String password="Anemoi@123";
 		
 		try {
 			connection=DriverManager.getConnection(url,user,password);

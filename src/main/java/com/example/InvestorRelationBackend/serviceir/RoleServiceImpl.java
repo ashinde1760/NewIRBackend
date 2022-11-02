@@ -43,7 +43,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn=InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
-			String query = "insert into rolemodel values(?,?,?,?,?)";
+			String query = "insert into rolemodel values(?,?,?,?,?,?)";
 
 			preparedStatement = conn.prepareStatement(query);
 			String id = UUID.randomUUID().toString();
