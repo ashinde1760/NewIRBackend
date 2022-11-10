@@ -168,8 +168,10 @@ public class RoleServiceImpl implements RoleServiceInterface {
 	  model.setId(rs.getString(1));
 	  model.setRoleName(rs.getString(2));
 	  model.setDescription(rs.getString(3));
-	  model.setStatus(rs.getString(4));		  
-	 
+	  model.setStatus(rs.getString(4));	
+	  ArrayList<String> vta=new ArrayList<>();
+	 vta.add(rs.getString(5));
+	 model.setDashboardAccess(vta);
 	  String[] dash = new String[10];	  
 	  List<String> dashboard = new ArrayList<>();
 	  
@@ -313,10 +315,10 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 			Statement stmt = conn.createStatement();
 
-			String query = "delete from InvestorDB.dbo.rolemodel where id = ?";
+		//	String query = "delete from InvestorDB.dbo.rolemodel where id = ?";
 //			ResultSet rs = stmt.executeQuery(query);
-			System.out.println("Before deletion");
-			preparedStatement = conn.prepareStatement("delete from role1 where id = ?");
+		//	System.out.println("Before deletion");
+			preparedStatement = conn.prepareStatement("delete from InvestorDB.dbo.rolemodel where id = ?");
 			preparedStatement.setString(1, id);
 			System.out.println("after deletion");
 			int executeUpdate = preparedStatement.executeUpdate();

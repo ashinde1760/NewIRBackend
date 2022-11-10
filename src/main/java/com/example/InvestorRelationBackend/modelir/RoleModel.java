@@ -11,9 +11,10 @@ public class RoleModel {
 	private String roleName;
 	private String description;
 	private String status;
-	private String dashboardAccess[]=new String[5];
 	
-	private Map<String, String> dashboard;
+	private ArrayList<String> dashboardAccess =new ArrayList<>();
+	
+	//private Map<String, String> dashboard;
 	
 	
 	private Long createdOn;
@@ -51,11 +52,11 @@ public class RoleModel {
 		this.status = status;
 	}
 
-	public String[] getDashboardAccess() {
+	public ArrayList<String> getDashboardAccess() {
 		return dashboardAccess;
 	}
 
-	public void setDashboardAccess(String[] dashboardAccess) {
+	public void setDashboardAccess(ArrayList<String> dashboardAccess) {
 		this.dashboardAccess = dashboardAccess;
 	}
 
@@ -69,12 +70,16 @@ public class RoleModel {
 		this.createdOn = createdOn;
 	}
 
-	public RoleModel(String id, String roleName, String description, String status, Long createdOn) {
+	
+
+	public RoleModel(String id, String roleName, String description, String status, ArrayList<String> dashboardAccess,
+			Long createdOn) {
 		super();
 		this.id = id;
 		this.roleName = roleName;
 		this.description = description;
 		this.status = status;
+		this.dashboardAccess = dashboardAccess;
 		this.createdOn = createdOn;
 	}
 
