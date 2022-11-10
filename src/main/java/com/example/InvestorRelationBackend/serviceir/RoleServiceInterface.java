@@ -35,7 +35,7 @@ public interface RoleServiceInterface {
 	
 	
 
-	List<User> getUserByRoleId(String id) throws SQLException;
+	List<User> getUserByRoleId(String role) throws SQLException;
 	
 	User getUserById(String id)throws SQLException;
 	

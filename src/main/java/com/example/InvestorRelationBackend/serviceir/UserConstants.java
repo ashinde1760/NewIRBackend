@@ -2,7 +2,7 @@ package com.example.InvestorRelationBackend.serviceir;
 
 public class UserConstants {
 
-	public static final String ID = "id";
+	public static final String ID = "userId";
 
 	public static final String FIRST_NAME = "firstName";
 

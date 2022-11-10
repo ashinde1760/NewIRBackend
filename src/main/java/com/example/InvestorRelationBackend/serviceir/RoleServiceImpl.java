@@ -40,7 +40,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 	@Override
 	public String createRole1(RoleModel role) throws SQLException {
 
-		try (Connection conn=InvestorDatabaseUtill.getConnection()) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
 			String query = "insert into InvestorDB.dbo.rolemodel values(?,?,?,?,?,?)";
@@ -149,56 +149,53 @@ public class RoleServiceImpl implements RoleServiceInterface {
 	 * }
 	 */
 
-	@Override public List<RoleModel> getAllRoles() throws SQLException {
-	  
-	  try (Connection conn = InvestorDatabaseUtill.getConnection()) {
-	  Statement stmt = conn.createStatement();
-	  
-	  String query = "Select * from InvestorDB.dbo.rolemodel";
-	  ResultSet rs =
-	  stmt.executeQuery(query);
-	  
-	  List<RoleModel> allRoleList = new ArrayList<>();
-	  int count = 0;
-	  
-	  while (rs.next()) 
-	  { 
-	
-	  RoleModel model = new RoleModel();
-	  model.setId(rs.getString(1));
-	  model.setRoleName(rs.getString(2));
-	  model.setDescription(rs.getString(3));
-	  model.setStatus(rs.getString(4));		  
-	 
-	  String[] dash = new String[10];	  
-	  List<String> dashboard = new ArrayList<>();
-	  
-	  
-//	  ArrayList<String> vta = new ArrayList<>();
-	  dashboard .add(rs.getString(1));
-//		roles.setVendorTemplateAccess(vta);
-		
-		
-	  Collections.addAll(dashboard, dash); 
-	  
-	  
-//	  model.setDashboardAccess(dashboard); 	 
-	  
-	  allRoleList.add(model);
-	  
-	  System.out.println("added"); } System.out.println(allRoleList.size());
-	  return  allRoleList;
-	  } catch (ClassNotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	return null;
-	  
-	  
-	 
-	 }
+	@Override
+	public List<RoleModel> getAllRoles() throws SQLException {
 
-	
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
+			Statement stmt = conn.createStatement();
+
+			String query = "Select * from InvestorDB.dbo.rolemodel";
+			ResultSet rs = stmt.executeQuery(query);
+
+			List<RoleModel> allRoleList = new ArrayList<>();
+			int count = 0;
+
+			while (rs.next()) {
+
+				RoleModel model = new RoleModel();
+				model.setId(rs.getString(1));
+				model.setRoleName(rs.getString(2));
+				model.setDescription(rs.getString(3));
+				model.setStatus(rs.getString(4));
+//				model.setDashboardAccess(rs.getArray(5));
+				model.setCreatedOn(rs.getLong(6));
+
+				String[] dash = new String[10];
+				List<String> dashboard = new ArrayList<>();
+
+//	  ArrayList<String> vta = new ArrayList<>();
+				dashboard.add(rs.getString(1));
+//		roles.setVendorTemplateAccess(vta);
+
+				Collections.addAll(dashboard, dash);
+
+//	  model.setDashboardAccess(dashboard); 	 
+
+				allRoleList.add(model);
+
+				System.out.println("added");
+			}
+			System.out.println(allRoleList.size());
+			return allRoleList;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
 	// user
 
 	@Override
@@ -316,7 +313,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			String query = "delete from InvestorDB.dbo.rolemodel where id = ?";
 //			ResultSet rs = stmt.executeQuery(query);
 			System.out.println("Before deletion");
-			preparedStatement = conn.prepareStatement("delete from role1 where id = ?");
+			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, id);
 			System.out.println("after deletion");
 			int executeUpdate = preparedStatement.executeUpdate();
@@ -371,9 +368,10 @@ public class RoleServiceImpl implements RoleServiceInterface {
 	}
 
 	@Override
-	public List<User> getUserByRoleId(String id) throws SQLException {
+	public List<User> getUserByRoleId(String role) throws SQLException {
 		User model = new User();
-		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
+		try  {
+			Connection conn = InvestorDatabaseUtill.getConnection();
 //			Statement stmt = conn.createStatement();
 			PreparedStatement pstmt = null;
 
@@ -381,16 +379,18 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			String query = "Select * from InvestorDB.dbo.user1 where role=?";
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, id);
+			pstmt.setString(1, role);
+
 			ResultSet rs = pstmt.executeQuery();
+//			System.out.println("executing the query+++++++++++++++++++" + rs.toString());
 
 			while (rs.next()) {
-
+				System.out.println("getting the result+++++++++++++++++++" + rs.toString());
 				User buildUser = buildUser(rs);
 				users.add(buildUser);
-
+				System.out.println(buildUser.toString());
+				return users;
 			}
-			return users;
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -412,6 +412,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 		model.setRole(rs.getString(UserConstants.ROLE));
 		model.setStatus(rs.getString(UserConstants.STATUS));
 		model.setCreatedOn(rs.getLong(10));
+		System.out.println(model.toString());
 		return model;
 	}
 
@@ -596,7 +597,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 	@Override
 	public String createIncomeForm(IncomeStatement incomeStatement) throws SQLException {
-		try (Connection conn =InvestorDatabaseUtill.getConnection()) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
 			String query = "insert into InvestorDB.dbo.incomestatement values(?,?,?,?)";
@@ -719,7 +720,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 	@Override
 	public String createShareHolderData(ShareHolderDataForm dataForm) throws SQLException {
-		System.out.println(dataForm+" data to be added");
+		System.out.println(dataForm + " data to be added");
 		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
@@ -793,7 +794,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 	@Override
 	public String createContact(ShareHolderContactDetailsForm detailsForm) throws SQLException {
 
-		try (Connection conn =InvestorDatabaseUtill.getConnection()) {
+		try (Connection conn = InvestorDatabaseUtill.getConnection()) {
 
 			PreparedStatement preparedStatement = null;
 			String query = "insert into InvestorDB.dbo.shareholdercontact values(?,?,?,?,?,?,?)";
@@ -869,16 +870,16 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			String id = UUID.randomUUID().toString();
 			form.setId(id);
 			preparedStatement.setString(1, id);
-			preparedStatement.setString(2,form.getDate());
-			preparedStatement.setString(3,form.getStartTime());
-			preparedStatement.setString(4,form.getEndTime());
+			preparedStatement.setString(2, form.getDate());
+			preparedStatement.setString(3, form.getStartTime());
+			preparedStatement.setString(4, form.getEndTime());
 			preparedStatement.setString(5, form.getOrganisation());
 			preparedStatement.setString(6, form.getStakeholderType());
 			preparedStatement.setString(7, form.getMeetingType());
 			preparedStatement.setString(8, form.getSubject());
 			preparedStatement.setString(9, form.getLocation());
 			preparedStatement.setString(10, form.getStatus());
-			preparedStatement.setString(11, form.getComments());			
+			preparedStatement.setString(11, form.getComments());
 			preparedStatement.setString(12, form.getParticipants());
 			preparedStatement.setString(13, form.getFeedback());
 			preparedStatement.setString(14, form.getBroker());
@@ -957,7 +958,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 			preparedStatement.setString(2, ratio.getFormulaName());
 			preparedStatement.setString(3, ratio.getFormulaType());
 			preparedStatement.setString(4, ratio.getFormula());
-			
+
 			int executeUpdate = preparedStatement.executeUpdate();
 			System.out.println(executeUpdate + " after role creation");
 
@@ -989,7 +990,6 @@ public class RoleServiceImpl implements RoleServiceInterface {
 				form.setFormulaName(rs.getString(2));
 				form.setFormulaType(rs.getString(3));
 				form.setFormula(rs.getString(4));
-				
 
 				holder.add(form);
 

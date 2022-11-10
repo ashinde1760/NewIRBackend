@@ -38,9 +38,9 @@ public class Controller {
 	@PostMapping("/createRole")
 	public String createRole(@RequestBody RoleModel model) throws SQLException {
 		System.out.println("got req to store from frontend");
-		for (int i = 0; i < model.getDashboardAccess().length; i++) {
-			System.out.println(model.getDashboardAccess());
-		}
+//		for (int i = 0; i < model.getDashboardAccess().length; i++) {
+//			System.out.println(model.getDashboardAccess());
+//		}
 		return this.roleInterface.createRole1(model);
 	}
 
@@ -91,9 +91,9 @@ public class Controller {
 		return roleInterface.getAllU();
 	}
 
-	@GetMapping("/getUserByRoleName/{id}")
-	public List<User> getUserByRoleId(@PathVariable String id) throws SQLException {
-		return roleInterface.getUserByRoleId(id);
+	@GetMapping("/getUserByRoleName/{role}")
+	public List<User> getUserByRoleId(@PathVariable String role) throws SQLException {
+		return roleInterface.getUserByRoleId(role);
 
 	}
 
