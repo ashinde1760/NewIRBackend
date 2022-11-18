@@ -4,7 +4,7 @@ public class InvestorDatabaseTables {
 	
 	public static final String DATA_BASE_PLACE_HOLDER="#$dataBaseName#$";
 	
-	public static final String CREATE_ROLEMODEL_TABLE="CREATE TABLE #$dataBaseName#$.dbo.rolemodel(id uniqueidentifier NOT NULL,roleName varchar(255) NOT NULL,description varchar(255) NOT NULL,status varchar(255) NOT NULL,dashboardAccess varchar(255) NOT NULL,createdOn bigint NOT NULL,CONSTRAINT PK_id PRIMARY KEY CLUSTERED(id))";
+	public static final String CREATE_ROLEMODEL_TABLE="CREATE TABLE #$dataBaseName#$.dbo.rolemodel(id uniqueidentifier NOT NULL,roleName varchar(255) NOT NULL,	description varchar(255) NOT NULL,status varchar(255) NOT NULL,dashboardAccess varchar(550) NOT NULL,createdOn bigint NOT NULL,CONSTRAINT PK_id PRIMARY KEY CLUSTERED(id))";
 
 	public static final String CREATE_USER_TABLE="CREATE TABLE #$dataBaseName#$.dbo.user1(userid uniqueidentifier NOT NULL,firstName varchar(255) NOT NULL,lastName varchar(255) NOT NULL,email varchar(255) NOT NULL,mobileNumber varchar(255) NOT NULL,domain varchar(255) NOT NULL,assignedName varchar(255) NOT NULL,role varchar(255) NOT NULL,status varchar(255) NOT NULL,createdOn bigint NOT NULL,CONSTRAINT userid PRIMARY KEY CLUSTERED(userid))";
 

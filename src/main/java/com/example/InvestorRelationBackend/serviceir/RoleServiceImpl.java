@@ -168,9 +168,12 @@ public class RoleServiceImpl implements RoleServiceInterface {
 				model.setRoleName(rs.getString(2));
 				model.setDescription(rs.getString(3));
 				model.setStatus(rs.getString(4));
+				ArrayList<String> vta=new ArrayList<>();
+				vta.add(rs.getString(5));
+				model.setDashboardAccess(vta);
 //				model.setDashboardAccess(rs.getArray(5));
 				model.setCreatedOn(rs.getLong(6));
-
+ 
 				String[] dash = new String[10];
 				List<String> dashboard = new ArrayList<>();
 
@@ -707,7 +710,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
 			System.out.println("List of balance Sheet form");
 			System.out.println(cashflow.size());
-
+			sysout
 			return cashflow;
 
 		} catch (ClassNotFoundException e) {

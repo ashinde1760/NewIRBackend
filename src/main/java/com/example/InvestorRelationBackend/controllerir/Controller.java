@@ -37,11 +37,8 @@ public class Controller {
 
 	@PostMapping("/createRole")
 	public String createRole(@RequestBody RoleModel model) throws SQLException {
-		System.out.println("got req to store from frontend");
-//		for (int i = 0; i < model.getDashboardAccess().length; i++) {
-//			System.out.println(model.getDashboardAccess());
-//		}
-		return this.roleInterface.createRole1(model);
+		String role=this.roleInterface.createRole1(model);
+		return role;
 	}
 
 	/*
